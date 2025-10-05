@@ -1,0 +1,36 @@
+services:
+  # === FRONTEND (React + Vite) ===
+  - type: static
+    name: Ortho-Vaidya-Chat-Frontend
+    buildCommand: npm install && npm run build
+    envVars:
+      - key: VITE_API_BASE_URL
+        value: https://Ortho-Vaidya-Chat-Backend.onrender.com
+      - key: BUILD_CSP_NONCE
+        value: f0c3b3d5e69c4f65
+    headers:
+      - path: /*
+        name: Content-Security-Policy
+        value: "default-src 'self'; script-src 'self' 'nonce-f0c3b3d5e69c4f65' blob:; worker-src 'self' blob:; style-src 'self' 'unsafe-inline'; connect-src 'self' https: wss: http://localhost:* http://127.0.0.1:*; img-src 'self' data: https: blob:; font-src 'self' data: https:; media-src 'self' blob: data:; object-src 'none'; base-uri 'self'; frame-ancestors 'none'; report-uri https://doctor-flow-visual-backend.onrender.com/csp-report;"
+      - path: /*
+        name: X-Frame-Options
+        value: DENY
+      - path: /*
+        name: X-Content-Type-Options
+        value: nosniff
+      - path: /*
+        name: Referrer-Policy
+        value: strict-origin-when-cross-origin
+
+  # === BACKEND (Flask API) ===
+  - type: web
+    name: Ortho-Vaidya-Chat-Backend
+    buildCommand: pip install -r requirements.txt
+    startCommand: gunicorn web_api:app
+    envVars:
+      - key: FLASK_ENV
+        value: production
+      - key: PORT
+        value: 5000
+      - key: FRONTEND_URL
+        value: https://doctor-flow-visual-frontend.onrender.com

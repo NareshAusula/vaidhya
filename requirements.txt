@@ -1,0 +1,34 @@
+# Backend dependencies for Render deployment# Backend API Dependencies
+
+Flask==2.3.3
+
+Flask-CORS==4.0.0
+
+python-dotenv==1.0.0
+
+google-generativeai==0.3.2
+
+requests==2.31.0
+
+gunicorn==21.2.0
+
+waitress==2.1.2
+
+# State storage (memory, can replace with Cosmos/SQL later)
+botbuilder-integration-aiohttp
+
+# For running async inside Jupyter Notebooks (optional)
+nest_asyncio
+
+# Environment variables management
+python-dotenv
+
+# Google Generative AI
+google-generativeai
+
+
+Flask == 2.3.3
+Flask-CORS == 4.0.0
+python-dotenv == 1.0.0
+
+gunicorn==21.2.0
