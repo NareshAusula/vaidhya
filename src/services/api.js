@@ -1,7 +1,7 @@
 // API configuration and service layer
 // Prefer env var; fallback to backend default port 5000
 
-const API_BASE_URL = process.env.REACT_APP_API_URL || 'http://localhost:5001';
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'https://orthovaidhya.onrender.com';
 
 class ApiService {
   constructor() {
