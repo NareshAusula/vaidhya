@@ -1,0 +1,17 @@
+# Environment variables for Medical Bot
+# Copy this file to .env and fill in your actual values
+# DO NOT commit .env file to version control!
+
+# Gemini API Key (get from https://makersuite.google.com/app/apikey)
+GEMINI_API_KEY=your_gemini_api_key_here
+
+# Microsoft Bot Framework credentials (optional for local development)
+MicrosoftAppId=
+MicrosoftAppPassword=
+
+# Database configuration (if needed)
+# DATABASE_URL=sqlite:///medical_bot.db
+
+# Other configuration
+# DEBUG=True
+# PORT=3978
