@@ -11,12 +11,13 @@ services:
   # === BACKEND (Flask API) ===
   - type: web
     name: ortho-vaidya-chat-backend
+    runtime: python
     buildCommand: pip install -r backend/requirements.txt
-    startCommand: cd backend && python web_api.py
+    startCommand: cd backend && gunicorn --bind 0.0.0.0:$PORT web_api:app
     envVars:
       - key: FLASK_ENV
         value: production
       - key: PORT
         value: 10000
-      - key: FLASK_APP
-        value: web_api.py
+      - key: PYTHON_VERSION
+        value: "3.11"

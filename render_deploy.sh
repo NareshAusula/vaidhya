@@ -9,12 +9,12 @@ ls -la
 if [ -d "backend" ]; then
     echo "Found backend directory at: $(pwd)/backend"
     BACKEND_DIR="backend"
-elif [ -d "src/backend" ]; then
-    echo "Found backend directory at: $(pwd)/src/backend" 
-    BACKEND_DIR="src/backend"
+elif [ -d "qna_backend" ]; then
+    echo "Found backend directory at: $(pwd)/qna_backend"
+    BACKEND_DIR="qna_backend"
 else
     echo "Searching for backend directory..."
-    find . -name "backend" -type d
+    find . -name "*backend*" -type d
     echo "Error: Cannot find backend directory"
     exit 1
 fi
@@ -28,5 +28,5 @@ echo "Current directory after cd: $(pwd)"
 echo "Contents of current directory:"
 ls -la
 
-# Start the application
-gunicorn wsgi:application --bind 0.0.0.0:$PORT
+# Start the Flask application
+python web_api.py
