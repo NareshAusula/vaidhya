@@ -1,12 +1,26 @@
 // API configuration and service layer
-// Prefer env var; fallback to backend default port 5000
+// Handle environment variables safely
 
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'https://orthovaidhya.onrender.com';
+// Safe way to access Vite env vars
+const getApiBaseUrl = () => {
+  // Check if we're in a Vite environment
+  if (typeof import.meta !== 'undefined' && import.meta.env) {
+    return import.meta.env.VITE_API_BASE_URL || 'https://orthovaidhya.onrender.com';
+  }
+  
+  // Fallback for production builds
+  return 'https://orthovaidhya.onrender.com';
+};
+
+const API_BASE_URL = getApiBaseUrl();
+
+console.log('API_BASE_URL:', API_BASE_URL); // Debug log
 
 class ApiService {
   constructor() {
     this.baseURL = API_BASE_URL;
     this.sessionId = this.getOrCreateSessionId();
+    console.log('ApiService initialized with baseURL:', this.baseURL); // Debug log
   }
 
   // Generate or retrieve session ID
@@ -22,6 +36,8 @@ class ApiService {
   // Generic API request method
   async makeRequest(endpoint, options = {}) {
     const url = `${this.baseURL}${endpoint}`;
+    console.log('Making request to:', url); // Debug log
+    
     const defaultOptions = {
       method: 'GET',
       headers: {
