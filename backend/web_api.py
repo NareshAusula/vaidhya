@@ -34,7 +34,8 @@ CSP_REPORT_VIEW_TOKEN = os.environ.get("CSP_REPORT_VIEW_TOKEN")
 cors_origins = [
     "http://localhost:3000",  # Local development
     "http://localhost:5173",  # Vite dev server
-    "https://*.onrender.com", # Render deployments
+    "https://vaidhya-6t0w.onrender.com",  # Your live frontend
+    "https://*.onrender.com", # Other Render deployments
 ]
 if FRONTEND_URL:
     cors_origins.append(FRONTEND_URL)
