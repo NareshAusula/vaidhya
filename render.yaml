@@ -2,22 +2,27 @@ services:
   # === FRONTEND (React + Vite) ===
   - type: static
     name: ortho-vaidya-chat-frontend
-    buildCommand: npm install && npm run build
-    staticPublishPath: ./dist
+    buildCommand: npm ci && npm run build
+    staticPublishPath: dist
     envVars:
       - key: VITE_API_BASE_URL
-        value: https://ortho-vaidya-chat-backend.onrender.com
+        # after backend is live change this to the backend's public URL
+        value: "https://ortho-vaidya-chat-backend.onrender.com"
+    # optional: add CSP headers here if needed (see notes below)
+    # headers:
+    #   - key: Content-Security-Policy
+    #     value: "default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; connect-src 'self' https:"
 
   # === BACKEND (Flask API) ===
   - type: web
     name: ortho-vaidya-chat-backend
     runtime: python
-    buildCommand: pip install -r backend/requirements.txt
-    startCommand: cd backend && gunicorn --bind 0.0.0.0:$PORT web_api:app
+    buildCommand: cd backend && python -m pip install -r requirements.txt
+    startCommand: cd backend && gunicorn --workers 2 --bind 0.0.0.0:$PORT web_api:app
     envVars:
       - key: FLASK_ENV
         value: production
-      - key: PORT
-        value: 10000
       - key: PYTHON_VERSION
         value: "3.11"
+      - key: FRONTEND_URL
+        value: "https://ortho-vaidya-chat-frontend.onrender.com"
