@@ -8,6 +8,9 @@ from collections import deque
 from flask_cors import CORS
 from dotenv import load_dotenv
 
+# Import chat logging functions
+from chat import init_db, log_message, get_session_logs
+
 # Import your existing functions
 from medical_qna import (
     binary_emergency_check, 
@@ -41,6 +44,9 @@ if FRONTEND_URL:
     cors_origins.append(FRONTEND_URL)
 
 CORS(app, origins=cors_origins)  # Enable CORS for web frontend
+
+# Initialize database
+init_db()
 
 # Store bot sessions
 bot_sessions = {}
@@ -368,8 +374,14 @@ def chat():
         
         bot = bot_sessions[session_id]
         
+        # Log user message
+        log_message(session_id, 'user', user_message)
+        
         # Process message
         response = bot.process_message(user_message)
+        
+        # Log bot response
+        log_message(session_id, 'bot', response.get('text', ''))
         
         return jsonify({
             'response': response,
